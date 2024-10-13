@@ -29,13 +29,14 @@ jobs:
       run: |
         # Capture the output from the previous script
         date_time_output="${{ env.current_time }}"
-        sum_output=$(python src/sum_date_time_parts.py ${date_time_output})
-        echo "sum_output=${sum_output}" >> $GITHUB_ENV  # Store the sum_output in env variable
+        sum_result=$(python src/sum_date_time_parts.py "$date_time_output")
+        echo "sum_result=${sum_result}" >> $GITHUB_ENV  # Store the result in an environment variable
+
 
     - name: Run divide_values.py
       run: |
-        # Use the output from sum_parts
-        sum_result="${{ env.sum_output }}"
-        date_sum=$(echo "$sum_result" | awk -F, '{print $1}')
-        time_sum=$(echo "$sum_result" | awk -F, '{print $2}')
+        # Capture the sum result from the previous step
+        sum_output="${{ env.sum_result }}"
+        date_sum=$(echo "$sum_output" | awk -F, '{print $1}')  # Obtener la suma de la fecha
+        time_sum=$(echo "$sum_output" | awk -F, '{print $2}')  # Obtener la suma del tiempo
         python src/divide_values.py "$date_sum" "$time_sum"
