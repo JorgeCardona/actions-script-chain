@@ -13,6 +13,11 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: List Files in Directory
+      run: |
+        echo "Listing files in the repository..."
+        ls -R  # List all files recursively
+
     - name: Run get_utc5_time.py
       id: get_time
       run: |
