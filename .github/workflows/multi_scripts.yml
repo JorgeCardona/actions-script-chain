@@ -38,4 +38,4 @@ jobs:
         sum_output="${{ env.tuple_values }}"
         date_sum=$(echo "$sum_output" | cut -d',' -f1)  # Obtener la suma de la fecha
         time_sum=$(echo "$sum_output" | cut -d',' -f2)  # Obtener la suma del tiempo
-        #python src/divide_values.py "$date_sum" "$time_sum"
+        python src/divide_values.py $date_sum $time_sum
