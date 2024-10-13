@@ -30,8 +30,7 @@ jobs:
         # Capture the output from the previous script
         date_time_output="${{ env.current_time }}"
         values=$(python src/sum_date_time_parts.py "$date_time_output")
-        #echo "tuple_values=${values}" >> $GITHUB_ENV  # Store the output in an environment variable
-        
+        echo "tuple_values=$(echo $values | tr -d '() ')" >> $GITHUB_ENV  # Store the output in an environment variable        
 
     - name: Run divide_values.py
       run: |
