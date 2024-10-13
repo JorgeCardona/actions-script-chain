@@ -5,6 +5,8 @@ def divide_values(value1, value2):
     if value2 == 0:
         return "Error: Cannot divide by zero."
 
+    print('value1',value1)
+    print('value2',value2)
     # Divide the first value by the second
     division_result = float(value1) / float(value2)
     
