@@ -30,7 +30,7 @@ def main():
         # Get the date-time string from command line arguments
         date_time_example = sys.argv[1]
         result = sum_parts(date_time_example)
-        print("sum_parts Result:", result)  # Print the sum_parts result
+        #print("sum_parts Result:", result)  # Print the sum_parts result
         print(f"{result[0]},{result[1]}")  # Print the result as comma-separated values
     else:
         print("Usage: python sum_date_time_parts.py 'YYYY-MM-DD HH:MM:SS'")
