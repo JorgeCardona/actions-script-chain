@@ -8,5 +8,5 @@ def get_utc5_time():
 
 if __name__ == "__main__":
     result = get_utc5_time()
-    print("sum_parts Result:", result)  # Print the sum_parts result
+    #print("sum_parts Result:", result)  # Print the sum_parts result
     print(result)  # Print the time to capture it in the workflow
