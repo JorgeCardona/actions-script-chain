@@ -1,7 +1,4 @@
 # actions-script-chain
-
-Here’s a README in English explaining how to pass results between scripts in a GitHub Actions workflow.
-
 ---
 
 # GitHub Actions: Passing Results Between Scripts
