@@ -1,4 +1,5 @@
 # actions-script-chain
+[![Execute Scripts](https://github.com/JorgeCardona/actions-script-chain/actions/workflows/multi_scripts.yml/badge.svg)](https://github.com/JorgeCardona/actions-script-chain/actions/workflows/multi_scripts.yml)
 ---
 
 # GitHub Actions: Passing Results Between Scripts
