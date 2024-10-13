@@ -29,7 +29,7 @@ jobs:
       run: |
         # Capture the output from the previous script
         date_time_output="${{ env.current_time }}"
-        sum_output=$(python src/sum_date_time_parts.py "$date_time_output")
+        sum_output=$(python src/sum_date_time_parts.py ${date_time_output})
         echo "sum_output=${sum_output}" >> $GITHUB_ENV  # Store the sum_output in env variable
 
     - name: Run divide_values.py
