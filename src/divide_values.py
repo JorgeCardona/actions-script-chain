@@ -31,6 +31,7 @@ def main():
         # Call the divide function and print the result
         result = divide_values(value1, value2)
         print("Division Result:", result)  # Print the division result
+        print(result)  # Print the division result
     else:
         print("Usage: python divide_values.py <value1> <value2>")
         sys.exit(1)

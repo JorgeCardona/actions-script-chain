@@ -24,6 +24,7 @@ def main():
         # Get the date-time string from command line arguments
         date_time_example = sys.argv[1]
         result = sum_parts(date_time_example)
+        print("sum_parts Result:", result)  # Print the sum_parts result
         print(result)  # Print the result
     else:
         print("Usage: python sum_date_time_parts.py 'YYYY-MM-DD HH:MM:SS'")
