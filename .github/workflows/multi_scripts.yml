@@ -10,31 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: List Files in Directory
-      run: |
-        echo "Listing files in the repository..."
-        ls -R  # List all files recursively
+      - name: List Files in Directory
+        run: |
+          echo "Listing files in the repository..."
+          ls -R  # List all files recursively
 
-    - name: Run get_utc5_time.py
-      id: get_time
-      run: |
-        output=$(python src/get_utc5_time.py)
-        echo "current_time=${output}" >> $GITHUB_ENV  # Store the output in an environment variable
+      - name: Run get_utc5_time.py
+        id: get_time
+        run: |
+          output=$(python src/get_utc5_time.py)
+          echo "current_time=${output}" >> $GITHUB_ENV  # Store the output in an environment variable
               
-    - name: Run sum_date_time_parts.py
-      id: sum_parts
-      run: |
-        # Capture the output from the previous script
-        date_time_output="${{ env.current_time }}"
-        python src/sum_date_time_parts.py "$date_time_output"
+      - name: Run sum_date_time_parts.py
+        id: sum_parts
+        run: |
+          # Capture the output from the previous script
+          date_time_output="${{ env.current_time }}"
+          sum_result=$(python src/sum_date_time_parts.py "$date_time_output")
+          echo "sum_result=${sum_result}" >> $GITHUB_ENV  # Store the result in an environment variable
 
-    - name: Run divide_values.py
-      run: |
-        # Capture the output from the sum_parts script
-        sum_output=$(python src/sum_date_time_parts.py "${{ env.current_time }}")
-        date_sum=$(echo "$sum_output" | awk -F, '{print $1}')
-        time_sum=$(echo "$sum_output" | awk -F, '{print $2}')
-        python src/divide_values.py "$date_sum" "$time_sum"
+      - name: Run divide_values.py
+        run: |
+          # Capture the sum result from the previous step
+          sum_output="${{ env.sum_result }}"
+          date_sum=$(echo "$sum_output" | awk -F, '{print $1}')  # Obtener la suma de la fecha
+          time_sum=$(echo "$sum_output" | awk -F, '{print $2}')  # Obtener la suma del tiempo
+          python src/divide_values.py "$date_sum" "$time_sum"
