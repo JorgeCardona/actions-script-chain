@@ -22,8 +22,8 @@ def main():
     # Check if exactly 2 values are provided (script name + 2 values)
     if len(sys.argv) == 3:  # Length must be 3: script name + 2 arguments
         try:
-            value1 = float(sys.argv[1])  # First argument
-            value2 = float(sys.argv[2])  # Second argument
+            value1 = sys.argv[1]  # First argument
+            value2 = sys.argv[2]  # Second argument
         except ValueError:
             print("Please enter valid numbers for value1 and value2.")
             sys.exit(1)
