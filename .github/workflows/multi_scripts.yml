@@ -23,10 +23,7 @@ jobs:
       run: |
         output=$(python src/get_utc5_time.py)
         echo "current_time=${output}" >> $GITHUB_ENV  # Store the output in an environment variable
-
-    - name: Print captured time
-      run: echo "Captured UTC-5 time: ${{ env.output }}"
-      
+              
     - name: Run sum_date_time_parts.py
       id: sum_parts
       run: |
