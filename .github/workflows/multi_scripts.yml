@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Allows manual triggering if needed
 
 jobs:
   run_scripts:
@@ -12,24 +11,25 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
     - name: Run get_utc5_time.py
       id: get_time
       run: |
-        python src/get_utc5_time.py
+        output=$(python src/get_utc5_time.py)
+        echo "current_time=${output}" >> $GITHUB_ENV  # Store the output in an environment variable
 
     - name: Run sum_date_time_parts.py
       id: sum_parts
       run: |
         # Capture the output from the previous script
-        date_time_output=$(python src/get_utc5_time.py)
+        date_time_output="${{ env.current_time }}"
         python src/sum_date_time_parts.py "$date_time_output"
 
     - name: Run divide_values.py
       run: |
         # Capture the output from the sum_parts script
-        sum_output=$(python src/sum_date_time_parts.py "$date_time_output")
+        sum_output=$(python src/sum_date_time_parts.py "${{ env.current_time }}")
         date_sum=$(echo "$sum_output" | awk -F, '{print $1}')
         time_sum=$(echo "$sum_output" | awk -F, '{print $2}')
         python src/divide_values.py "$date_sum" "$time_sum"
