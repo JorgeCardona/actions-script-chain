@@ -6,7 +6,7 @@ def divide_values(value1, value2):
         return "Error: Cannot divide by zero."
 
     # Divide the first value by the second
-    division_result = value1 / value2
+    division_result = float(value1) / float(value2)
     
     # Check if the result is an exact integer
     if division_result.is_integer():
