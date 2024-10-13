@@ -14,16 +14,16 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Run get_current_time.py
+    - name: Run get_utc5_time.py
       id: get_time
       run: |
-        python src/get_current_time.py
+        python src/get_utc5_time.py
 
     - name: Run sum_date_time_parts.py
       id: sum_parts
       run: |
         # Capture the output from the previous script
-        date_time_output=$(python src/get_current_time.py)
+        date_time_output=$(python src/get_utc5_time.py)
         python src/sum_date_time_parts.py "$date_time_output"
 
     - name: Run divide_values.py
