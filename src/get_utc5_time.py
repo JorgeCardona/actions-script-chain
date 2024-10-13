@@ -8,5 +8,4 @@ def get_utc5_time():
 
 if __name__ == "__main__":
     result = get_utc5_time()
-    print("Current UTC-5 Time:", result)  # This is for reference only
     print(result)  # This is the one that will be captured in the workflow
