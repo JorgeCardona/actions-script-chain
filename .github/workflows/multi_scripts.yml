@@ -1,40 +1,38 @@
-name: Execute Scripts
+name: Run Scripts
 
-on:
+on: 
   push:
     branches:
       - main
 
 jobs:
-  run_scripts:
+  run-scripts:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: List Files in Directory
-      run: |
-        echo "Listing files in the repository..."
-        ls -R  # List all files recursively
+      - name: List files in the repository
+        run: |
+          echo "Listing files in the repository..."
+          ls -R
 
-    - name: Run get_utc5_time.py
-      id: get_time
-      run: |
-        output=$(python src/get_utc5_time.py)
-        echo "current_time=${output}" >> $GITHUB_ENV  # Store the output in an environment variable
+      - name: Capture current UTC-5 time
+        id: get_time
+        run: |
+          output=$(python src/get_utc5_time.py)  # Capture the output directly
+          echo "output=$output" >> $GITHUB_ENV  # Store the output in an environment variable
 
-    - name: Run sum_date_time_parts.py
-      id: sum_parts
-      run: |
-        # Capture the output from the previous script
-        date_time_output="${{ env.current_time }}"
-        python src/sum_date_time_parts.py "$date_time_output"
+      - name: Print captured time
+        run: echo "Captured UTC-5 time: ${{ env.output }}"
 
-    - name: Run divide_values.py
-      run: |
-        # Capture the output from the sum_parts script
-        sum_output=$(python src/sum_date_time_parts.py "${{ env.current_time }}")
-        date_sum=$(echo "$sum_output" | awk -F, '{print $1}')
-        time_sum=$(echo "$sum_output" | awk -F, '{print $2}')
-        python src/divide_values.py "$date_sum" "$time_sum"
+      # Add steps to execute the sum_parts and divide_values scripts
+      - name: Run sum_parts script
+        run: |
+          python src/sum_date_time_parts.py "${{ env.output }}"
+
+      - name: Run divide_values script
+        run: |
+          # Replace 10 and 2 with the actual values you need
+          python src/divide_values.py 10 2
