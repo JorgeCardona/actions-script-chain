@@ -1,10 +1,13 @@
-name: Execute Scripts
+name: Multi Scripts Chain Execution
 
 on:
   push:
     branches:
       - main
-
+      
+env:
+  SRC_DIRECTORY: src  # Declare SRC_DIRECTORY as a global environment variable, making the path available throughout the workflow
+  
 jobs:
   run_scripts:
     runs-on: ubuntu-latest
@@ -21,21 +24,21 @@ jobs:
     - name: Run get_utc5_time.py
       id: get_time
       run: |
-        output=$(python src/get_utc5_time.py)
+        output=$(python "${{ env.SRC_DIRECTORY }}/get_utc5_time.py")
         echo "current_time=${output}" >> $GITHUB_ENV  # Store the output in an environment variable
-              
+
     - name: Run sum_date_time_parts.py
       id: sum_parts
+      # Capture the output from the previous script
       run: |
-        # Capture the output from the previous script
         date_time_output="${{ env.current_time }}"
-        values=$(python src/sum_date_time_parts.py "$date_time_output")
-        echo "tuple_values=$(echo $values | tr -d '() ')" >> $GITHUB_ENV  # Store the output in an environment variable        
+        values=$(python "${{ env.SRC_DIRECTORY }}/sum_date_time_parts.py" "$date_time_output")
+        echo "tuple_values=$(echo $values | tr -d '() ')" >> $GITHUB_ENV  # Store the output in an environment variable
 
     - name: Run divide_values.py
+    # Capture the sum result from the previous step
       run: |
-        # Capture the sum result from the previous step
         sum_output="${{ env.tuple_values }}"
-        date_sum=$(echo "$sum_output" | cut -d',' -f1)  # Obtener la suma de la fecha
-        time_sum=$(echo "$sum_output" | cut -d',' -f2)  # Obtener la suma del tiempo
-        python src/divide_values.py $date_sum $time_sum
+        date_sum=$(echo "$sum_output" | cut -d',' -f1)
+        time_sum=$(echo "$sum_output" | cut -d',' -f2)
+        python "${{ env.SRC_DIRECTORY }}/divide_values.py" $date_sum $time_sum
